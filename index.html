@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+	<title>Backgammon-DOM</title>
+	<link rel="stylesheet" type="text/css" href="./app.css">
+</head>
+<body>
+	<header>
+		<h1>五子棋</h1>
+	</header>
+	<main>
+		<div class="btn-group">
+			<button class="btn" id="start">开始</button>
+			<button class="btn" id="take-back">悔棋</button>
+			<button class="btn" id="put-back">撤销悔棋</button>
+		</div>	
+
+
+		<div id="checker-board">
+			<div id="black" ></div>
+			<div id="white"></div>
+		</div>	
+
+	</main>
+	<div class="mask" style="display: none">
+		<h1 id="timer"></h1>
+		<button class="btn" id="restart">重新开始</button>	
+	</div>
+
+
+	<script data-main="app.js" src="./js/libs/require.js"></script>
+</body>
+</html>
