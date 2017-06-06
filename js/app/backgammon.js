@@ -1,7 +1,7 @@
 define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoard, Piece) {
 	// 五子棋构造函数
-	function Backgammon(checkerboard, piece) {
-		this.checkerboard = checkerboard || {},
+	function Backgammon(checkerBoard, piece) {
+		this.checkerBoard = checkerBoard || {},
 			this.piece = piece || {}
 	}
 
@@ -10,27 +10,31 @@ define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoa
 
 		// 初始化棋盘
 		init: function() {
-			var boardWidth = $("#checker-board").width(),
-				boardHeight = $("#checker-board").height(); // 棋盘边长
-			var spacing = 30; //格子间距
-			var margin = 10; //边框间距
-			var boardId = "checker-board";
-
-			$("#" + boardId).html("");
+			$("#" + this.checkerBoard.id).html("");
 			$("#start").removeClass("active");
 			$(".mask").hide();
-			$("#checker-board").unbind();
+			$("#" + this.checkerBoard.id).unbind();
 			$("#take-back").unbind();
 			$("#put-back").unbind();
 
-			this.matrixWidth = (boardWidth - 2 * margin) / spacing + 1; // 初始化矩阵长
-			this.matrixHeight = (boardHeight - 2 * margin) / spacing + 1; // 初始化矩阵宽
+			this.setCheckerBoard(this.checkerBoard); // 设置棋盘属性
+			this.setPiece(this.piece.r); //  设置棋子属性
 
-			this.checkerBoard = new CheckerBoard(boardId, boardWidth, boardHeight, spacing, margin);
-			this.checkerBoard.init();
-			this.piece = new Piece( 12 );
+			this.matrixWidth = (this.checkerBoard.width - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing + 1; // 初始化矩阵长
+			this.matrixHeight = (this.checkerBoard.height - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing + 1; // 初始化矩阵宽
 		},
 
+		// 设置棋盘属性
+		setCheckerBoard:  function(board) {
+			this.checkerBoard = new CheckerBoard(board);
+			this.checkerBoard.init();
+		},
+
+		// 设置棋子属性
+		setPiece: function(r) {
+			this.piece = new Piece( r, this.checkerBoard.id );
+		},
+		
 		// 开局
 		start: function() {
 			var that = this;
@@ -41,7 +45,7 @@ define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoa
 			this.count = 0;
 			// this.timeCount();
 
-			$("#checker-board").click(function(e) {
+			$("#" + this.checkerBoard.id).click(function(e) {
 				that.placePiece(e);
 			});
 

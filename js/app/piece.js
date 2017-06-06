@@ -1,7 +1,8 @@
 define(["jquery"], function() {
 	// 棋子构造函数
-	function Piece( r ) {
-		this.r =  r || 12 // 棋子半径
+	function Piece( r, boardId ) {
+		this.r =  r || 12 , // 棋子半径
+		this.id = boardId
 	}
 
 	Piece.prototype = {
@@ -30,7 +31,7 @@ define(["jquery"], function() {
 			fragment.style.left = this.x  - this.r + "px";
 			fragment.style.top = this.y - this.r + "px";
 			fragment.id = pos.x + "-" + pos.y + "-piece";
-			$("#checker-board").append(fragment);
+			$("#" + this.id).append(fragment);
 		},
 
 		clear: function(pos) {

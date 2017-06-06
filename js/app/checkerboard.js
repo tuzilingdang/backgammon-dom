@@ -1,21 +1,21 @@
 define(["jquery"], function($) {
 	// 棋盘构造函数
-	function CheckerBoard(boardId, width, height, spacing, margin, gridLineColor, boardBackColor) {
-		this.boardId = boardId;
-		this.width = width || 440; //
-		this.height = height || 440;
-		this.spacing = spacing || 30;
-		this.margin = margin || 10;
-		this.gridLineColor = gridLineColor || "#807d7d";
-		this.boardBackColor = boardBackColor || "#EACE9F";
+	function CheckerBoard(board) {
+		this.id = board.id;
+		this.spacing = board.spacing || 30;
+		this.margin = board.margin || 10;
+		this.gridLineColor = board.gridLineColor || "#807d7d";
+		this.boardBackColor = board.boardBackColor || "#EACE9F";
 	}
 
 	CheckerBoard.prototype = {
 		constructor: CheckerBoard,
 
 		// 初始化棋盘
-		init: function() {
-			$("#" + this.boardId).height($("#" + this.boardId).width());
+		init: function() {	
+			$("#" + this.id).height($("#" + this.id).width());
+			this.width = $("#" + this.id).width();
+			this.height = $("#" + this.id).width();
 			this.rows = (this.width - this.margin * 2) / this.spacing;
 			this.cols = (this.height - this.margin * 2) / this.spacing;
 			this.fillBackgroundColor();
@@ -44,7 +44,7 @@ define(["jquery"], function($) {
 
 		// 填充棋盘颜色
 		fillBackgroundColor: function() {
-			$("#" + this.boardId).css("background-color", this.boardBackColor);
+			$("#" + this.id).css("background-color", this.boardBackColor);
 		},
 
 		// 绘制棋盘边框
@@ -93,7 +93,7 @@ define(["jquery"], function($) {
 				fragment.appendChild(row);
 			}
 
-			document.querySelector("#checker-board").appendChild(fragment);
+			document.querySelector("#" + this.id).appendChild(fragment);
 		},
 
 		// 绘制棋盘圆点
@@ -112,12 +112,12 @@ define(["jquery"], function($) {
 			fragment.appendChild(this.makeDot(leftX, bottomY, 4));
 			fragment.appendChild(this.makeDot(rightX, topY, 4));
 			fragment.appendChild(this.makeDot(rightX, bottomY, 4));
-			$("#" + this.boardId).append(fragment);
+			$("#" + this.id).append(fragment);
 		},
 
 		// 获取鼠标点击位置相对于checker-board原点的像素坐标
 		getMousePos: function(e) {
-			var canvas = $("#" + this.boardId);
+			var canvas = $("#" + this.id);
 			var canvasPos = {
 				x: canvas.offset().left + this.margin,
 				y: canvas.offset().top + this.margin,

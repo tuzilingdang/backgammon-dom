@@ -10,7 +10,16 @@ require.config({
 
 // 开始 app 主逻辑.
 require(["jquery", "backgammon"], function($, Backgammon) {
-    var backgammon = new Backgammon();
+
+    var checkerBoard = {
+        id: "checker-board",
+        spacing: 30, //格子间距
+        margin: 10   //边框间距
+    };
+
+    var piece = { r : 12 };
+
+    var backgammon = new Backgammon( checkerBoard, piece);
     backgammon.init();
 
     $("#start").click(function() {
