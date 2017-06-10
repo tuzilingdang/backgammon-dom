@@ -2,7 +2,7 @@ define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoa
 	// 五子棋构造函数
 	function Backgammon(checkerBoard, piece) {
 		this.checkerBoard = checkerBoard || {},
-			this.piece = piece || {}
+		this.piece = piece || {}
 	}
 
 	Backgammon.prototype = {
@@ -20,8 +20,8 @@ define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoa
 			this.setCheckerBoard(this.checkerBoard); // 设置棋盘属性
 			this.setPiece(this.piece.r); //  设置棋子属性
 
-			this.matrixWidth = (this.checkerBoard.width - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing + 1; // 初始化矩阵长
-			this.matrixHeight = (this.checkerBoard.height - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing + 1; // 初始化矩阵宽
+			this.matrixWidth = Math.round((this.checkerBoard.width - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing) + 1; // 初始化矩阵长
+			this.matrixHeight = Math.round((this.checkerBoard.height - 2 * this.checkerBoard.margin) / this.checkerBoard.spacing) + 1; // 初始化矩阵宽
 		},
 
 		// 设置棋盘属性
@@ -292,6 +292,5 @@ define("backgammon", ["jquery", "checkerboard", "piece"], function($, CheckerBoa
 			clearTimeout(this.t);
 		}
 	}
-
 	return Backgammon;
 });

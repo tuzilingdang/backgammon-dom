@@ -16,6 +16,8 @@ define(["jquery"], function() {
 		makePiece: function(name) {
 			var div = document.createElement("div");
 			div.className = name;
+			div.style.width = this.r * 2 + "px";
+			div.style.height = this.r * 2 + "px";
 			return div;
 		},
 
@@ -39,6 +41,5 @@ define(["jquery"], function() {
 			$(id).remove();
 		},
 	}
-
 	return Piece;
 });

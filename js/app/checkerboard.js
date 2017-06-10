@@ -2,30 +2,39 @@ define(["jquery"], function($) {
 	// 棋盘构造函数
 	function CheckerBoard(board) {
 		this.id = board.id;
-		this.spacing = board.spacing || 30;
-		this.margin = board.margin || 10;
+		this.rows = board.rows || 14;
+		this.margin = Math.round(board.margin) || 10;
 		this.gridLineColor = board.gridLineColor || "#807d7d";
-		this.boardBackColor = board.boardBackColor || "#EACE9F";
+		this.boardColor = board.boardColor || "#EACE9F";
 	}
 
 	CheckerBoard.prototype = {
 		constructor: CheckerBoard,
 
 		// 初始化棋盘
-		init: function() {	
+		init: function() {
 			$("#" + this.id).height($("#" + this.id).width());
 			this.width = $("#" + this.id).width();
 			this.height = $("#" + this.id).width();
-			this.rows = (this.width - this.margin * 2) / this.spacing;
-			this.cols = (this.height - this.margin * 2) / this.spacing;
+			this.cols = this.rows;
+			this.spacing = (this.width - this.margin * 2) / this.rows;
+
 			this.fillBackgroundColor();
 			this.drawGrid();
 			this.drawBoardArc();
+			this.drawBorder();
 		},
 
 		makeSquare: function() {
 			var div = document.createElement("div");
 			div.className = "square";
+			div.style.width = this.spacing + "px";
+			div.style.height = this.spacing + "px";
+			div.style.display = "inline-block";
+			div.style.verticalAlign = "top";
+			div.style.border = "1px solid " + this.gridLineColor;
+			div.style.borderBottom = "none";
+			div.style.borderLeft = "none";
 			return div;
 		},
 
@@ -44,18 +53,15 @@ define(["jquery"], function($) {
 
 		// 填充棋盘颜色
 		fillBackgroundColor: function() {
-			$("#" + this.id).css("background-color", this.boardBackColor);
+			$("#" + this.id).css("background-color", this.boardColor);
 		},
 
 		// 绘制棋盘边框
 		drawBorder: function() {
-			square.className = "square first-y first-x";
-			square.style.borderLeft = "2px solid #000000";
-			square.style.borderBottom = "2px solid #000000";
-			$("square first-y first-x").css("border-left", "2px solid #000000" );
-			$("square first-y first-x").css("border-bottom", "2px solid #000000" );
-			$("square first-y first-x").css("border-left", "2px solid #000000" );
-			$("square first-y first-x").css("border-left", "2px solid #000000" );
+			var squarey = $(".first-y");
+			var squarex = $(".first-x");
+			squarey.css("border-left", "1px solid " + this.gridLineColor);
+			squarex.css("border-bottom", "1px solid " + this.gridLineColor);
 		},
 
 		// 绘制棋盘格子
@@ -65,11 +71,23 @@ define(["jquery"], function($) {
 
 			for (var i = 0; i < this.rows; i++) {
 				row = document.createElement("div");
+				row.style.height = this.spacing + "px";
+				row.style.width = this.spacing * this.rows + "px";
+				row.style.marginLeft = this.margin + "px";
+				row.style.borderLeft = "0.5px solid" + this.gridLineColor;
+				row.style.borderRight = "0.5px solid" + this.gridLineColor;
+				if ( i === 0 ) {
+					row.style.marginTop = this.margin + "px";
+					row.style.borderTop = "0.5px solid" + this.gridLineColor;		
+				}
+				if ( i == (this.rows -1) ) {
+					row.style.borderBottom = "0.5px solid" + this.gridLineColor;	
+				}
 				row.className = "row";
 				for (var j = 0; j < this.rows; j++) {
 					var square = this.makeSquare();
 					square.id = j + "-" + i;
-					
+
 					if (j === 0) {
 						if (i === this.rows - 1) {
 							square.className = "square first-y first-x";
@@ -92,7 +110,6 @@ define(["jquery"], function($) {
 				}
 				fragment.appendChild(row);
 			}
-
 			document.querySelector("#" + this.id).appendChild(fragment);
 		},
 
@@ -122,12 +139,10 @@ define(["jquery"], function($) {
 				x: canvas.offset().left + this.margin,
 				y: canvas.offset().top + this.margin,
 			};
-
 			var mouseClientPos = {
 				x: e.pageX,
 				y: e.pageY
 			};
-
 			var x = (mouseClientPos.x - canvasPos.x) * this.width / canvas.width();
 			var y = (mouseClientPos.y - canvasPos.y) * this.height / canvas.height();
 
@@ -146,6 +161,5 @@ define(["jquery"], function($) {
 			};
 		}
 	}
-
 	return CheckerBoard;
 });
