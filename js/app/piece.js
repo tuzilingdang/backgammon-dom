@@ -1,7 +1,7 @@
 define(["jquery"], function() {
 	// 棋子构造函数
 	function Piece( r, boardId ) {
-		this.r =  r || 12 , // 棋子半径
+		this.r =  r || 10 , // 棋子半径
 		this.id = boardId
 	}
 
