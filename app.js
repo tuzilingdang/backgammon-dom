@@ -12,8 +12,8 @@ require.config({
 require(["jquery", "backgammon"], function($, Backgammon) {
     var checkerBoard = {
         id: "checker-board",
-        rows: 16, // 棋盘列数
-        margin: 10, // 棋盘边框间距
+        rows: 14, // 棋盘列数
+        margin: 15, // 棋盘边框间距
         // gridLineColor: "#3dd849",
         // boardColor: "black"
     };
